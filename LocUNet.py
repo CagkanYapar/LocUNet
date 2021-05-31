@@ -15,13 +15,17 @@ warnings.filterwarnings("ignore")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 import os
 
+with open('results/Log.txt', 'w') as f:
+    print('Training Accuracy', file=f)
+    print('-' * 20, file=f)
+
 from lib import loader, modules
 
 
 
 simName = "DPM" # Options: DPM, ZSDPMtoIRT2, DPMtoIRT2, DPMcars, IRT2carsCDPM, IRT2carsCDPMtoIRT, from top to bottom in Table II of paper
   
-inp = 16
+
 Loc_train = loader.locDL(phase="train",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")
 Loc_val = loader.locDL(phase="val",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")    
     
@@ -41,6 +45,8 @@ torch.set_default_dtype(torch.float32)
 torch.set_default_tensor_type('torch.cuda.FloatTensor')
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
+
+inp = 16
 model = modules.LocUNet(inputs=inp)
 model.cuda()
 
@@ -74,7 +80,7 @@ def print_metrics(metrics, epoch_samples, phase):
     outputs2 = []
     for k in metrics.keys():
         outputs1.append("{}: {:4f}".format(k, metrics[k] / epoch_samples))
-    with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/Log.txt', 'a') as f:
+    with open('results/Log.txt', 'a') as f:
         print("{}: {}".format(phase, ", ".join(outputs1)), file=f)
 
 def train_model(model, optimizer, scheduler, num_epochs=50):
@@ -83,13 +89,13 @@ def train_model(model, optimizer, scheduler, num_epochs=50):
     best_loss = 1e10
 #    print('selam1')
     for epoch in range(num_epochs):
-        with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/Log.txt', 'a') as f:
+        with open('results/Log.txt', 'a') as f:
             print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
             print('-' * 10, file=f)
-        with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/OutputTrue.txt', 'a') as f:
+        with open('results/OutputTrue.txt', 'a') as f:
             print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
             print('-' * 10, file=f)
-        with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/TrainingLoss.txt', 'a') as f:
+        with open('results/TrainingLoss.txt', 'a') as f:
             print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
             print('-' * 10, file=f)    
 
@@ -99,7 +105,7 @@ def train_model(model, optimizer, scheduler, num_epochs=50):
             if phase == 'train':
                 scheduler.step()
                 for param_group in optimizer.param_groups:
-                    with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/Log.txt', 'a') as f:
+                    with open('results/Log.txt', 'a') as f:
                         print("learning rate", param_group['lr'], file=f)
 
                 model.train()  # Set model to training mode
@@ -142,15 +148,15 @@ def train_model(model, optimizer, scheduler, num_epochs=50):
                 best_model_wts = copy.deepcopy(model.state_dict())
 
         time_elapsed = time.time() - since
-        with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/Log.txt', 'a') as f:
+        with open('results/Log.txt', 'a') as f:
             print('{:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60), file=f)
             now = datetime.now()
             print("now =", now, file=f)
-    with open('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/Log.txt', 'a') as f:
+    with open('results/Log.txt', 'a') as f:
         print('Best val loss: {:4f}'.format(best_loss), file=f)
     
     #Save model from last epoch
-    stringer = 'resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/WCityWTx' + 'Epoch50.pt'
+    stringer = 'results/WCityWTx' + 'Epoch50.pt'
 
     torch.save(model.state_dict(), stringer)
     # load best model weights
@@ -178,7 +184,7 @@ model = train_model(model, optimizer_ft, exp_lr_scheduler)
 
 
 #Save Model with best val loss
-stringer = 'resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/BestModel.pt'
+stringer = 'results/BestModel.pt'
 torch.save(model.state_dict(), stringer)
 
 
