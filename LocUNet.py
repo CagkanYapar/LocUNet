@@ -25,8 +25,6 @@ inp = 16
 Loc_train = loader.locDL(phase="train",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")
 Loc_val = loader.locDL(phase="val",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")    
     
-Type = "noEps",epsNormTrnc=0.3)
-
 image_datasets = {
     'train': Loc_train, 'val': Loc_val
 }
