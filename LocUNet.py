@@ -22,8 +22,8 @@ from lib import loader, modules
 simName = "DPM" # Options: DPM, ZSDPMtoIRT2, DPMtoIRT2, DPMcars, IRT2carsCDPM, IRT2carsCDPMtoIRT, from top to bottom in Table II of paper
   
 inp = 16
-Loc_train = loaderLocDenNoEpsCorCarsC.locDL(phase="train",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")
-Loc_val = loaderLocDenNoEpsCorCarsC.locDL(phase="val",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")    
+Loc_train = loader.locDL(phase="train",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")
+Loc_val = loader.locDL(phase="val",dir_dataset="dataset/",cityMap="true",carsMap="false",simulation=simName,TxMaps="true")    
     
 Type = "noEps",epsNormTrnc=0.3)
 
@@ -43,7 +43,7 @@ torch.set_default_dtype(torch.float32)
 torch.set_default_tensor_type('torch.cuda.FloatTensor')
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
-model = modulesLargerVar.LocUNet(inputs=inp)
+model = modules.LocUNet(inputs=inp)
 model.cuda()
 
 
