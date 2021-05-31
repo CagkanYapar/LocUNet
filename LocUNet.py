@@ -160,12 +160,7 @@ def train_model(model, optimizer, scheduler, num_epochs=50):
     return model
 
 
-# In[10]:
-
-# #load the saved model from first epoch to continue (cityMap, Tx)
-# model.load_state_dict(torch.load('resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/WCityWTxEpoch1.pt'))
-
-#looks good, CoM NaN corrected (v1, denom 0 olmadi ama bi bokluk oldu, print in txt), run epoch, 
+# #load the saved model from first epoch to continue 
 import torch
 import torch.optim as optim
 from torch.optim import lr_scheduler
@@ -183,16 +178,9 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=30, gamma=0.1)
 model = train_model(model, optimizer_ft, exp_lr_scheduler)
 
 
-# In[ ]:
-
 
 #Save Model with best val loss
 stringer = 'resultsWCityWTxWCarsLr3LargerIRT2carsOnlineDSNoEpsCorVarCarsCDPM/BestModel.pt'
 torch.save(model.state_dict(), stringer)
-
-# #load the saved model above to continue
-# model.load_state_dict(torch.load('../data/trainedModels/WorksEpoch0.pt'))
-# model.to(device)#accuracy test for 5eps CoM Epoch 1-2
-
 
 
