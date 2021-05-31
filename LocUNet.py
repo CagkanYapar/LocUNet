@@ -92,12 +92,6 @@ def train_model(model, optimizer, scheduler, num_epochs=50):
         with open('results/Log.txt', 'a') as f:
             print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
             print('-' * 10, file=f)
-        with open('results/OutputTrue.txt', 'a') as f:
-            print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
-            print('-' * 10, file=f)
-        with open('results/TrainingLoss.txt', 'a') as f:
-            print('Epoch {}/{}'.format(epoch, num_epochs - 1), file=f)
-            print('-' * 10, file=f)    
 
         since = time.time()
         # Each epoch has a training and validation phase
