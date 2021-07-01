@@ -25,11 +25,13 @@ def get_centers_of_mass(tensor):
     Returns:
         Tuple (Tensor): Tuple of two tensors of sizes (*)
     """
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    
     width = tensor.size(-1)
     height = tensor.size(-2)
     
-    x_coord_im = torch.linspace(0,255,width).repeat(height,1)
-    y_coord_im = torch.linspace(0,255,height).unsqueeze(0).transpose(0,1).repeat(1,width)
+    x_coord_im = torch.linspace(0,255,width).repeat(height,1).to(device)
+    y_coord_im = torch.linspace(0,255,height).unsqueeze(0).transpose(0,1).repeat(1,width).to(device)
     
     x_mean = torch.mul(tensor,x_coord_im).sum(-1).sum(-1)/torch.add(tensor.sum(-1).sum(-1),0.0000001)
     y_mean = torch.mul(tensor,y_coord_im).sum(-1).sum(-1)/torch.add(tensor.sum(-1).sum(-1),0.0000001)
