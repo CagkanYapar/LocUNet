@@ -40,7 +40,7 @@ class locDL(Dataset):
             transform: Transform to apply on the images of the loader.  Default= transforms.ToTensor())
                  
         Output:
-            inputs: The RadioUNet inputs.  
+            inputs: The LocUNet inputs.  
             RXlocr: Pixel row of true location
             RXlocc: Pixel column of true location
             
