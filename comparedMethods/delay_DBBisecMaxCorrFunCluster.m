@@ -54,9 +54,8 @@ end
 if ~isempty(po)
     pp = BisecCorr(po,noTx2);%
     
-    %     pp = BisecRob(po,noTx2,0.7);%3:6.5, 100:40.2284, 1: 6.85
     pTrue = [rxx, rxy];
-    %POCS error
+
     diffRBis = pTrue(1)-pp(1);
     diffCBis = pTrue(2)-pp(2);
     difBis = sqrt(diffRBis^2+diffCBis^2);

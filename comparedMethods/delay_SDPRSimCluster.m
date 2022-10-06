@@ -1,4 +1,4 @@
-function delay_SDPRFullSimCluster(input_argument)
+function delay_SDPRSimCluster(input_argument)
 %G. Wang, H. Chen, Y. Li, and N. Ansari, “NLOS error mitigation for TOA-based localization via convex relaxation,” IEEE
 %Transactions on Wireless Communications, vol. 13, no. 8, pp. 4119–4131, 2014.
 

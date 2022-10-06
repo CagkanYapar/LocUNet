@@ -1,4 +1,4 @@
-function delay_SDPFullSimCluster(input_argument)
+function delay_SDPSimCluster(input_argument)
 %R. M. Vaghefi, J. Schloemann, and R. M. Buehrer, “NLOS mitigation in TOA-based localization using semidefinite
 %programming,” in 2013 10th Workshop on Positioning, Navigation and Communication (WPNC), 2013, pp. 1–6.
 if(ischar(input_argument))
